@@ -14,10 +14,10 @@ public class Dish {
     @Column(name = "description")
     private String description;
     @ManyToOne
-    @JoinColumn(name = "menu_id")
+    @JoinColumn(name = "id")
     private Menu menu;
-    @OneToOne
-    @JoinColumn(name = "reservation_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
     private Reservation reservation;
 
     public Dish(int id, String title, String description, Menu menu) {

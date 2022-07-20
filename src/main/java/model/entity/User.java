@@ -18,8 +18,8 @@ public class User {
     private boolean isAdmin;
     @Column(name = "password")
     private String password;
-    @OneToOne
-    @JoinColumn(name = "reservation_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id")
     private Reservation reservation;
 
     public User(int id, String name, String email, boolean isAdmin, String password, Reservation reservation) {

@@ -10,11 +10,9 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "id")
     private User user;
-    @OneToOne
-    @JoinColumn(name = "dish_id")
+    @OneToOne(mappedBy = "id")
     private Dish dish;
     @Column(name = "quantity")
     private int quantity;

@@ -186,26 +186,26 @@ Main {
     public static void userFunc(int userId) {
         while (true) {
             ReservationDAO reservationDAO = new ReservationDAO();
-            DishDAO bookDAO = new DishDAO();
+            FoodProviderDAO foodProviderDAO = new FoodProviderDAO();
             Scanner scan = new Scanner(System.in);
-            int pickedDishId;
-            Dish pickedDish;
+            int pickedFoodProviderId;
+            Dish pickedFoodProvider;
             User currentUser;
             String chooseOperation;
             System.out.println("\nPlease select the operation by number:\n" +
-                    "1. For searching for books.\n" +
+                    "1. For searching for food providers.\n" +
                     "2. For log out.\n");
             chooseOperation = scan.next();
             if (chooseOperation.equals("1")) {
-                System.out.println("Chose a book id from the list below:\n");
-                System.out.println(bookDAO.searchAvailableBooks());
-                pickedDishId = scan.nextInt();
-                pickedDish = DishDAO.searchById(pickedDishId);
+                System.out.println("Chose a food provider id from the list below:\n");
+                System.out.println(foodProviderDAO.searchAll());
+                pickedFoodProviderId = scan.nextInt();
+                pickedFoodProvider = DishDAO.searchById(pickedFoodProviderId);
                 currentUser = UserDAO.searchById(userId);
 
-                Reservation reservation = new Reservation(currentUser, pickedDish);
-                reservationDAO.insert(reservation);
-                System.out.println("Book reserved!");
+//                Reservation reservation = new Reservation(currentUser, pickedFoodProvider);
+//                reservationDAO.insert(reservation);
+//                System.out.println("Book reserved!");
             } else {
                 break;
             }
