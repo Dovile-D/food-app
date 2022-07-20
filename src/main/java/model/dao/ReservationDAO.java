@@ -1,11 +1,14 @@
 package model.dao;
 
+import model.entity.Dish;
 import model.entity.Menu;
 import model.entity.Reservation;
 import model.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.HibernateUtil;
+
+import java.util.List;
 
 public class ReservationDAO {
 
@@ -44,6 +47,15 @@ public class ReservationDAO {
         reservation = session.get(Reservation.class, id);
         session.delete(reservation);
         transaction.commit();
+    }
+
+    public static List<Reservation> searchAll() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Reservation> reservations = null;
+        reservations = session.createQuery("FROM Dish").list();
+
+        return reservations;
     }
 
 }

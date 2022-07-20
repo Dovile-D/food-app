@@ -19,7 +19,7 @@ public class Reservation {
     @Column(name = "is_confirmed")
     private boolean isConfirmed;
 
-    public Reservation() {
+    public Reservation(User currentUser, Dish pickedDish) {
     }
 
     public Reservation(boolean isConfirmed) {

@@ -67,8 +67,10 @@ Main {
             DishDAO dishDAO = new DishDAO();
             FoodProviderDAO foodProviderDAO = new FoodProviderDAO();
             MenuDAO menuDAO = new MenuDAO();
+            ReservationDAO reservationDAO = new ReservationDAO();
             Scanner scan = new Scanner(System.in);
             int adminOperation;
+            int reservationOperation = 0;
             String dishOperation;
             String menuOperation;
             String menuName;
@@ -85,6 +87,7 @@ Main {
             String newTitle;
             String newDescription;
             Menu newMenu ;
+            int pickedReservation;
 
             System.out.println("\nWelcome to admin panel. Please choose working panel:\n " +
                     "1. DISHES\n" +
@@ -132,7 +135,7 @@ Main {
                     System.out.println("Enter new description of the dish:\n");
                     newDescription = scan.nextLine();
                     System.out.println("Enter new menu of the dish:\n");
-                    //                        __________________choose category_______________
+                    //                        __________________choose menu_______________
                     System.out.println("Chose a number of the menu id from the list below:\n");
                     System.out.println(menuDAO.searchAll());
                     dishMenuUpdateId = scan.nextInt();
@@ -174,7 +177,20 @@ Main {
                     Menu updatedMenu = new Menu(menuUpdateId, newMenuName);
                     menuDAO.update(updatedMenu);
                     System.out.println("\nThe menu is updated!\n");
-                } else {
+                } else if (adminOperation == 4) {
+                    System.out.println("Which operation you would like to execute?\n" +
+                            "1. For confirming reservation.\n" +
+                            "2. For declining reservation.\n" +
+                            "Please enter the number of the option:");
+                    if(reservationOperation == 1) {
+                        System.out.println("please pick reservation id from a list bellow:");
+                        System.out.println(reservationDAO.searchAll());
+                        pickedReservation = scan.nextInt();
+                        reservationDAO.getReservationStatus(pickedReservation);
+
+                    }
+                }
+                else {
                     break;
                 }
             }
@@ -187,9 +203,13 @@ Main {
         while (true) {
             ReservationDAO reservationDAO = new ReservationDAO();
             FoodProviderDAO foodProviderDAO = new FoodProviderDAO();
+            MenuDAO menuDAO = new MenuDAO();
+            DishDAO dishDAO = new DishDAO();
             Scanner scan = new Scanner(System.in);
             int pickedFoodProviderId;
-            Dish pickedFoodProvider;
+            int pickedMenuId;
+            int pickedDishId;
+            Dish pickedDish;
             User currentUser;
             String chooseOperation;
             System.out.println("\nPlease select the operation by number:\n" +
@@ -200,12 +220,18 @@ Main {
                 System.out.println("Chose a food provider id from the list below:\n");
                 System.out.println(foodProviderDAO.searchAll());
                 pickedFoodProviderId = scan.nextInt();
-                pickedFoodProvider = DishDAO.searchById(pickedFoodProviderId);
+                System.out.println("please chose a menu id from a list below:");
+                System.out.println(foodProviderDAO.searchById(pickedFoodProviderId));
+                pickedMenuId = scan.nextInt();
+                System.out.println("please chose a dish id from a list below: ");
+                System.out.println(menuDAO.searchById(pickedMenuId));
+                pickedDishId = scan.nextInt();
+                pickedDish = dishDAO.searchById(pickedDishId);
                 currentUser = UserDAO.searchById(userId);
 
-//                Reservation reservation = new Reservation(currentUser, pickedFoodProvider);
-//                reservationDAO.insert(reservation);
-//                System.out.println("Book reserved!");
+                Reservation reservation = new Reservation(currentUser, pickedDish);
+                reservationDAO.insert(reservation);
+                System.out.println("Dish is reserved!");
             } else {
                 break;
             }
